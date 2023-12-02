@@ -142,3 +142,69 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+// let books = getBooks();
+// books;
+
+const book = getBook(1);
+// console.log(book.title);
+
+const genre = book.genres
+
+const newGenre = [...genre, "epic"];
+
+// console.log(newGenre)
+
+const updatedBook = {
+  ...book,
+  moviePublicationDate: "2001-12-19",
+  pages: 1210
+}
+
+// console.log(book.genres?.a??0)
+// console.log(updatedBook)
+
+const books = getBooks();
+
+// const y = [1,2,3,4,5];
+// const x = y.map((el) => el*2);
+
+// console.log(y) 
+// console.log(x)
+
+// const x = [1,2,3,4,5,6,7,8];
+// const y = x.filter(el => el & 1);
+
+// console.log(y);
+
+// const pagesAllBooks = books.reduce()
+
+// let y = 0;
+
+// function check(x) {
+//     console.log(y);
+//     x();
+//     console.log(y)
+// }
+
+// check(() => ++y)
+
+// console.log(y)
+
+// const x = ['a','b','f','c','g','d'];
+
+// x.sort((a, b) => a.localeCompare(b))
+
+// console.log(x)
+
+// fetch("https://jsonplaceholder.typicode.com/todos")
+//   .then((res) => res.json())
+//   .then((data) => console.log(data));
+
+async function getJson() {
+  const json = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const data = await json.json();
+  console.log(data);
+}
+
+getJson();
