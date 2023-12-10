@@ -38,6 +38,15 @@ export default function App() {
         setFriends((el) => [...el, friend])    
     }
 
+    function handleDeleteFriend(friendId)  {
+        setFriends((els) => els.filter((el) => el.id !== friendId))
+    }
+
+    function handleModifyFriend(friend) {
+        handleDeleteFriend(friend.id);
+        handleAddFriend(friend);
+    }
+
     return(
         <div className="app">
             <div className="sidebar">
@@ -57,6 +66,7 @@ export default function App() {
             <FormSplitBill 
                 friend={curSelectFriend}
                 key={curSelect}
+                handleModifyFriend={handleModifyFriend}
             />}
         </div>
     )
@@ -145,7 +155,7 @@ function FormAddFriend({handleAddFriend}) {
     )
 }
 
-function FormSplitBill({friend}) {
+function FormSplitBill({friend,handleModifyFriend}) {
     const [bill, setBill] = useState("");
     const [yourExp, setYourExp] = useState("");
     const [otherExp, setOtherExp] = useState("");
@@ -154,7 +164,16 @@ function FormSplitBill({friend}) {
     function onSubmit(e) {
         e.preventDefault();
         if (!bill || !yourExp || !otherExp) return;
-
+        let numberYourExp = Number(yourExp);
+        let numberOtherExp = Number(otherExp);
+        if (Number(bill) !== numberYourExp + numberOtherExp) return;
+        let newFriend = friend;
+        if (whoPay === "You") 
+            newFriend.balance += numberOtherExp;
+        
+        else 
+            newFriend.balance -= numberYourExp;
+        handleModifyFriend(newFriend);
         setBill("");
         setYourExp("");
         setOtherExp("");
